@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.appoint.dao.BookDao">
+	<select id="queryById" parameterType="long" resultType="com.szu.appoint.entiy.Book" >
+		<!-- 具体的sql -->
+		SELECT
+			book_id,
+			name,
+			introd,
+			number
+		FROM
+			book
+		WHERE
+			book_id = #{bookId}
+	</select>
+
+	<select id="querySome" parameterType="String" resultType="com.szu.appoint.entiy.Book">
+		SELECT book_id,name,introd,number FROM book
+		<where>
+			<!-- <if test="name !=null and !&quot;&quot;.equals(name.trim())">  -->
+				and name like '%' #{name} '%'
+			<!--  </if>   -->
+		</where> 
+	</select> 
+		
+	<select id="queryAll" resultType="com.szu.appoint.entiy.Book">
+		SELECT
+			book_id,
+			name,
+			introd,
+			number
+		FROM
+			book
+		ORDER BY
+			book_id
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	
+	<update id="reduceNumber">
+		UPDATE book
+		SET number = number-1
+		WHERE
+			book_id = #{bookId}
+		AND number > 0
+	</update>
+	
+	<update id="increaseNumber">
+		UPDATE book
+		SET number=number+1
+		WHERE 
+			book_id=#{bookId}
+			
+	</update>
+	
+	<update id="changeNumber">
+		UPDATE book
+		SET number=number + #{number}
+		WHERE 
+			name=#{bookname}
+		AND number + #{number}>0
+	</update>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(book_id)
+		FROM book
+	</select>
+	
+	<insert id="addBook">
+		INSERT INTO book(name,number,introd)
+		VALUES(#{bookName},#{bookNumber},#{bookinfo})
+	</insert>
+	
+
+
+</mapper>

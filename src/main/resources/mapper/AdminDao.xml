@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szu.appoint.dao.AdminDao"> <!-- namespace 唯一标识 -->
+	<resultMap type="java.util.HashMap" id="map">
+		<result property="key" column="name"/>
+		<result property="value" column="number"/>
+	</resultMap>
+	<select id="quaryAdmin" parameterType="long" resultType="com.szu.appoint.entiy.Admin">
+		SELECT Admin_id,Admin_password
+		FROM Admin
+		WHERE Admin_id=#{Admin_id}
+		AND Admin_password=#{Admin_password}
+	</select>
+	<select id="quaryRest" resultType="java.util.HashMap">
+		SELECT name,number
+		FROM book
+	</select>
+</mapper>
